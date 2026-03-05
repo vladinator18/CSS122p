@@ -2,30 +2,23 @@ package realestate.Parser;
 
 import com.opencsv.CSVReader;
 import java.io.FileReader;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Parser {
 
-    public void printDatabase(String filePath) {
-        // The 'try-with-resources' ensures the file closes automatically
+    public List<String[]> loadRawData(String filePath) {
+        List<String[]> data = new ArrayList<>();
+        
+        // This 'try' block replaces the UnsupportedOperationException
         try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
-            String[] nextLine;
-            
-            System.out.println(">>> LOADING DATABASE: " + filePath);
-            System.out.println("--------------------------------------------------------------------------------");
-
-            // readNext() pulls one row at a time as a String array
-            while ((nextLine = reader.readNext()) != null) {
-                // Use printf to create clean, aligned columns in the terminal
-                // %-12s means "string, left-aligned, 12 characters wide"
-                System.out.printf("%-12s | %-10s | %-10s | %-15s | %-10s%n", 
-                                  nextLine[0], nextLine[1], nextLine[2], nextLine[4], nextLine[5]);
-            }
-            
-            System.out.println("--------------------------------------------------------------------------------");
-
+            // readAll() converts the CSV rows into a List of String arrays
+            data = reader.readAll(); 
         } catch (Exception e) {
-            System.err.println("Error: Could not read the file. Check if " + filePath + " is in the project root.");
+            System.err.println("Error: Could not read " + filePath);
+            e.printStackTrace();
         }
+        
+        return data;
     }
 }
