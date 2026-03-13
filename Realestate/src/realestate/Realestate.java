@@ -27,7 +27,7 @@ public class Realestate {
                 try {
                     Property p = new Property.Builder()
                         .setUnitCode(row[0])
-                        .setBlock(Integer.parseInt(row[1]))
+                        .setBlock(row[1])
                         .setLot(Integer.parseInt(row[2]))
                         .setArea(Integer.parseInt(row[3]))
                         .setPrice(Double.parseDouble(row[4]))
@@ -57,8 +57,8 @@ public class Realestate {
                         presenter.displayLots(properties); // <-- uses 'properties' here
                         break;
                     case "2":
-                        System.out.print("Enter block number: ");
-                        int block = Integer.parseInt(scanner.nextLine());
+                        System.out.print("Enter block (e.g. A, B): ");
+                        String block = scanner.nextLine();
                         result = presenter.filterByBlock(properties, block);
                         presenter.displayLots(result);
                         break;

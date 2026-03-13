@@ -3,7 +3,7 @@ package realestate.Presenter;
 public class Property {
 
     private String unitCode;
-    private int block;
+    private String block;
     private int lot;
     private int area;
     private double price;
@@ -20,14 +20,14 @@ public class Property {
 
     public static class Builder {
         private String unitCode;
-        private int block;
+        private String block;
         private int lot;
         private int area;
         private double price;
         private String status;
 
         public Builder setUnitCode(String unitCode) { this.unitCode = unitCode; return this; }
-        public Builder setBlock(int block) { this.block = block; return this; }
+        public Builder setBlock(String block) { this.block = block; return this; }
         public Builder setLot(int lot) { this.lot = lot; return this; }
         public Builder setArea(int area) { this.area = area; return this; }
         public Builder setPrice(double price) { this.price = price; return this; }
@@ -38,12 +38,15 @@ public class Property {
 
     // Display for table
     public void display() {
-        System.out.printf("%-10s %-6d %-6d %-8d %-10.2f %-10s\n",
+        System.out.printf("%-10s %-6s %-6d %-8d %-10.2f %-10s\n",
                 unitCode, block, lot, area, price, status);
     }
 
     // Getters for filtering
-    public int getBlock() { return block; }
+    public String getUnitCode() { return unitCode; }
+    public String getBlock() { return block; }
+    public int getLot() { return lot; }
     public int getArea() { return area; }
+    public double getPrice() { return price; }
     public String getStatus() { return status; }
 }

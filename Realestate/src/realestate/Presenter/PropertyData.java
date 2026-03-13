@@ -27,10 +27,10 @@ public class PropertyData {
     }
 
     // Filter by block number
-    public List<Property> filterByBlock(List<Property> properties, int block) {
+    public List<Property> filterByBlock(List<Property> properties, String block) {
         List<Property> result = new ArrayList<>();
         for (Property p : properties) {
-            if (p.getBlock() == block) {
+            if (p.getBlock().equalsIgnoreCase(block)) {
                 result.add(p);
             }
         }
