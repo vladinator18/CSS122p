@@ -121,14 +121,14 @@ public class Realestate extends JFrame {
         // Action Listeners
         filterCombo.addActionListener(e -> {
             String selected = (String) filterCombo.getSelectedItem();
-            if ("All Properties".equals(selected)) {
-                filterField.setText("");
-                filterField.setEnabled(false);
-                updateTable(allProperties); // Instantly show all properties when switching back
-            } else {
+//            if ("All Properties".equals(selected)) {
+//                filterField.setText("");
+//                filterField.setEnabled(false);
+//                updateTable(allProperties); // Instantly show all properties when switching back
+//            } else {
                 filterField.setEnabled(true);
                 filterField.requestFocus();
-            }
+//            }
         });
 
         applyBtn.addActionListener(e -> applyFilter());
@@ -156,7 +156,9 @@ public class Realestate extends JFrame {
         }
 
         try {
-            if ("Block".equals(filterType)) {
+            if ("All Properties".equals(filterType)) {
+                result = propertyData.displayLots(allProperties);
+            }else if ("Block".equals(filterType)) {
                 result = propertyData.filterByBlock(allProperties, filterValue);
             } else if ("Lot Size".equals(filterType)) {
                 int size = Integer.parseInt(filterValue);
@@ -165,7 +167,8 @@ public class Realestate extends JFrame {
                 result = propertyData.filterByStatus(allProperties, filterValue);
             } 
             else if ("Price".equals(filterType)) {
-                result = propertyData.filterByPrice(allProperties, filterValue);
+                int price = Integer.parseInt(filterValue);
+                result = propertyData.filterByPrice(allProperties, price);
             }else {
                 result = allProperties;
             }

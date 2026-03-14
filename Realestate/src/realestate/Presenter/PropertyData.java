@@ -47,10 +47,10 @@ public class PropertyData {
         }
         return result;
     }
-    public List<Property> filterByPrice(List<Property> properties, String price) {
+    public List<Property> filterByPrice(List<Property> properties, int price) {
         List<Property> result = new ArrayList<>();
         for (Property p : properties) {
-            if (p.getStatus().equalsIgnoreCase(price)) {
+            if (p.getPrice()==price) {
                 result.add(p);
             }
         }

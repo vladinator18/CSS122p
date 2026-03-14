@@ -122,14 +122,14 @@ public class SimpleUI extends JFrame {
         // Action Listeners
         filterCombo.addActionListener(e -> {
             String selected = (String) filterCombo.getSelectedItem();
-            if ("All Properties".equals(selected)) {
-                filterField.setText("");
-                filterField.setEnabled(false);
-                updateTable(allProperties); // Instantly show all properties when switching back
-            } else {
+//            if ("All Properties".equals(selected)) {
+//                filterField.setText("");
+//                filterField.setEnabled(false);
+//                updateTable(allProperties); // Instantly show all properties when switching back
+//            } else {
                 filterField.setEnabled(true);
                 filterField.requestFocus();
-            }
+//            } to enable for all selected cases for java combo box
         });
 
         applyBtn.addActionListener(e -> applyFilter());
@@ -157,7 +157,10 @@ public class SimpleUI extends JFrame {
         }
 
         try {
-            if ("Block".equals(filterType)) {
+            if ("All Properties".equals(filterType)) {
+                result = propertyData.displayLots(allProperties);
+            }
+            else if ("Block".equals(filterType)) {
                 result = propertyData.filterByBlock(allProperties, filterValue);
             } else if ("Lot Size".equals(filterType)) {
                 int size = Integer.parseInt(filterValue);
@@ -167,7 +170,7 @@ public class SimpleUI extends JFrame {
             }
             else if ("Price".equals(filterType)) {
                 int price = Integer.parseInt(filterValue);
-                result = propertyData.filterByPrice(allProperties,price );
+                result = propertyData.filterByPrice(allProperties,price);
             }else {
                 result = allProperties;
             }
