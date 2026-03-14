@@ -6,7 +6,7 @@ import java.util.List;
 public class PropertyData {
 
     // Display all properties
-    public void displayLots(List<Property> properties) {
+    public List<Property> displayLots(List<Property> properties) {
         System.out.printf("%-10s %-6s %-6s %-8s %-10s %-10s\n",
                 "UNITCODE", "BLOCK", "LOT", "AREA", "PRICE", "STATUS");
         System.out.println("------------------------------------------------------");

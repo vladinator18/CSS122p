@@ -126,6 +126,7 @@ public class Realestate extends JFrame {
 //                filterField.setEnabled(false);
 //                updateTable(allProperties); // Instantly show all properties when switching back
 //            } else {
+                updateTable(allProperties);
                 filterField.setEnabled(true);
                 filterField.requestFocus();
 //            }
@@ -139,6 +140,7 @@ public class Realestate extends JFrame {
     }
 
     private void applyFilter() {
+        filterCombo.setSelectedItem("All Properties");
         String filterType = (String) filterCombo.getSelectedItem();
         String filterValue = filterField.getText().trim();
         List<Property> result;
@@ -158,7 +160,8 @@ public class Realestate extends JFrame {
         try {
             if ("All Properties".equals(filterType)) {
                 result = propertyData.displayLots(allProperties);
-            }else if ("Block".equals(filterType)) {
+            }
+            else if ("Block".equals(filterType)) {
                 result = propertyData.filterByBlock(allProperties, filterValue);
             } else if ("Lot Size".equals(filterType)) {
                 int size = Integer.parseInt(filterValue);

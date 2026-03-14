@@ -141,6 +141,7 @@ public class SimpleUI extends JFrame {
     }
 
     private void applyFilter() {
+        filterCombo.setSelectedItem("All Properties");
         String filterType = (String) filterCombo.getSelectedItem();
         String filterValue = filterField.getText().trim();
         List<Property> result;
@@ -158,10 +159,10 @@ public class SimpleUI extends JFrame {
         }
 
         try {
-//            if ("All Properties".equals(filterType)) {
-//                result = propertyData.displayLots(allProperties);
-//            }
-            if ("Block".equals(filterType)) {
+            if ("All Properties".equals(filterType)) {
+                result = propertyData.displayLots(allProperties);
+            }
+            else if ("Block".equals(filterType)) {
                 result = propertyData.filterByBlock(allProperties, filterValue);
             } else if ("Lot Size".equals(filterType)) {
                 int size = Integer.parseInt(filterValue);
