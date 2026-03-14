@@ -3,6 +3,7 @@ package realestate;
 import realestate.Parser.Parser;
 import realestate.Presenter.Property;
 import realestate.Presenter.PropertyData;
+import realestate.Report.ReportGenerator;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +20,7 @@ public class SimpleUI extends JFrame {
     private JTextField filterField;
     private List<Property> allProperties;
     private PropertyData propertyData;
+    private ReportGenerator repGen;
 
     public SimpleUI() {
         // Set up main frame
@@ -83,6 +85,31 @@ public class SimpleUI extends JFrame {
         applyBtn.setForeground(Color.BLACK);
         applyBtn.setFocusPainted(false);
 
+        
+        JButton reportBtn = new JButton("Full Report");
+        reportBtn.setFont(new Font("Arial", Font.BOLD, 14));
+        reportBtn.setBackground(new Color(60, 179, 113));
+        reportBtn.setForeground(Color.BLACK);
+        reportBtn.setFocusPainted(false);
+
+        JButton blockReportBtn = new JButton("Block Report");
+        blockReportBtn.setFont(new Font("Arial", Font.BOLD, 14));
+        blockReportBtn.setBackground(new Color(60, 179, 113));
+        blockReportBtn.setForeground(Color.BLACK);
+        blockReportBtn.setFocusPainted(false);
+
+        reportBtn.addActionListener(e -> {
+            ReportGenerator rg = new ReportGenerator();
+            rg.generateFullReport(allProperties);
+            JOptionPane.showMessageDialog(this, "Full report printed to console.", "Report Generated", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        blockReportBtn.addActionListener(e -> {
+            ReportGenerator rg = new ReportGenerator();
+            rg.generateBlockReport(allProperties);
+            JOptionPane.showMessageDialog(this, "Block report printed to console.", "Report Generated", JOptionPane.INFORMATION_MESSAGE);
+        });
+        
         controlPanel.add(filterLabel);
         controlPanel.add(filterCombo);
         controlPanel.add(filterField);
