@@ -143,10 +143,10 @@ public class Realestate extends JFrame {
         String filterValue = filterField.getText().trim();
         List<Property> result;
 
-        if ("All Properties".equals(filterType)) {
-            updateTable(allProperties);
-            return;
-        }
+//        if ("All Properties".equals(filterType)) {
+//            updateTable(allProperties);
+//            return;
+//        }
 
         if (filterValue.isEmpty()) {
             JOptionPane.showMessageDialog(this, 
