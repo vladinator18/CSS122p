@@ -6,8 +6,8 @@ package realestate.Report;
 
 import realestate.Presenter.Property;
 import java.util.List;
-
-public class ReportGenerator {
+import javax.swing.*;
+public class ReportGenerator extends JPanel {
 
     // ─── Main Report ────────────────────────────────────────────────────────────
     public void generateFullReport(List<Property> properties) {
@@ -112,5 +112,20 @@ public class ReportGenerator {
         System.out.println("\n" + "=".repeat(80));
         System.out.println("                    END OF BLOCK REPORT");
         System.out.println("=".repeat(80) + "\n");
+        
+        
     }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            // Set System Look & Feel for nicer overall OS-matching layout
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception ignored) {
+            }
+
+            ReportGenerator rg = new ReportGenerator();
+            rg.setVisible(true);
+        });
+    }
+    
 }

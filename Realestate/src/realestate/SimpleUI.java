@@ -77,7 +77,7 @@ public class SimpleUI extends JFrame {
         
         filterField = new JTextField(15);
         filterField.setFont(new Font("Arial", Font.PLAIN, 14));
-        filterField.setEnabled(false); // Disabled initially for "All Properties"
+//        filterField.setEnabled(false); // Disabled initially for "All Properties"
         
         JButton applyBtn = new JButton("Apply Filter");
         applyBtn.setFont(new Font("Arial", Font.BOLD, 14));
