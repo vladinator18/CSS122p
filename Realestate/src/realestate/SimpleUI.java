@@ -69,7 +69,7 @@ public class SimpleUI extends JFrame {
         JLabel filterLabel = new JLabel("Filter by:");
         filterLabel.setFont(new Font("Arial", Font.BOLD, 14));
         
-        String[] filters = {"All Properties", "Block", "Lot Size", "Status"};
+        String[] filters = {"All Properties", "Block", "Lot Size", "Status", "Price"};
         filterCombo = new JComboBox<>(filters);
         filterCombo.setFont(new Font("Arial", Font.PLAIN, 14));
         
@@ -164,7 +164,11 @@ public class SimpleUI extends JFrame {
                 result = propertyData.filterBySize(allProperties, size);
             } else if ("Status".equals(filterType)) {
                 result = propertyData.filterByStatus(allProperties, filterValue);
-            } else {
+            }
+            else if ("Price".equals(filterType)) {
+                int price = Integer.parseInt(filterValue);
+                result = propertyData.filterByPrice(allProperties,price );
+            }else {
                 result = allProperties;
             }
             updateTable(result);
