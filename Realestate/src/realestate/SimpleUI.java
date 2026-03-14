@@ -80,7 +80,7 @@ public class SimpleUI extends JFrame {
         JButton applyBtn = new JButton("Apply Filter");
         applyBtn.setFont(new Font("Arial", Font.BOLD, 14));
         applyBtn.setBackground(new Color(70, 130, 180));
-        applyBtn.setForeground(Color.WHITE);
+        applyBtn.setForeground(Color.BLACK);
         applyBtn.setFocusPainted(false);
 
         controlPanel.add(filterLabel);
@@ -91,7 +91,7 @@ public class SimpleUI extends JFrame {
         mainPanel.add(controlPanel, BorderLayout.NORTH);
 
         // Center Panel (JTable)
-        String[] columnNames = {"UNIT CODE", "BLOCK", "LOT", "AREA", "PRICE", "STATUS"};
+        String[] columnNames = {"UNIT CODE", "BLOCK LETTER", "LOT NO.", "AREA (sqm)", "PRICE", "STATUS"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -192,8 +192,8 @@ public class SimpleUI extends JFrame {
                 p.getUnitCode(),
                 p.getBlock(),
                 p.getLot(),
-                p.getArea(),
-                String.format("$%,.2f", p.getPrice()), // Format currency nicer
+                String.format(p.getArea()+"sqm"),
+                String.format("₱%,.2f",p.getPrice()), // Format currency nicer
                 p.getStatus()
             };
             tableModel.addRow(row);
