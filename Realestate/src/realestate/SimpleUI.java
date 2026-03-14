@@ -188,7 +188,7 @@ public class SimpleUI extends JFrame {
 
         try {
             if ("All Properties".equals(filterType)) {
-                result = propertyData.displayLots(allProperties);
+                result = propertyData.displayLots(allProperties, filterValue);
             }
             else if ("Block".equals(filterType)) {
                 result = propertyData.filterByBlock(allProperties, filterValue);
