@@ -7,18 +7,30 @@ public class PropertyData {
 
     // Display all properties
 // Display all properties and return the list for UI/Table use
+    // add a proxy variable that will act as both int and string
     public List<Property> displayLots(List<Property> properties) {
         // Optional: Keep the console print logic for debugging
-        System.out.printf("%-10s %-6s %-6s %-8s %-10s %-10s\n",
-                "UNITCODE", "BLOCK", "LOT", "AREA", "PRICE", "STATUS");
-        System.out.println("------------------------------------------------------");
-        
-        for (Property p : properties) {
-            p.display(); // Calls the display method within the Property class
+//        System.out.printf("%-10s %-6s %-6s %-8s %-10s %-10s\n",
+//                "UNITCODE", "BLOCK", "LOT", "AREA", "PRICE", "STATUS");
+//        System.out.println("------------------------------------------------------");
+
+        List<Property> result = new ArrayList<>();
+            if (p.getArea() == size) {
+                result.add(p);// Calls the display method within the Property class
+            } 
+            if (p.getArea() == size) {
+                result.add(p);// Calls the display method within the Property class
+            }
+            if (p.getArea() == size) {
+                result.add(p);// Calls the display method within the Property class
+            }
+            if (p.getArea() == size) {
+                result.add(p);// Calls the display method within the Property class
+  
         }
 
         // Return the list so updateTable(result) in SimpleUI has data to display
-        return properties; 
+        return result; 
     }
 
     // Filter by lot size

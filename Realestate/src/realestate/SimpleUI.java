@@ -114,7 +114,8 @@ public class SimpleUI extends JFrame {
         controlPanel.add(filterCombo);
         controlPanel.add(filterField);
         controlPanel.add(applyBtn);
-
+        controlPanel.add(reportBtn);
+        controlPanel.add(blockReportBtn);
         mainPanel.add(controlPanel, BorderLayout.NORTH);
 
         // Center Panel (JTable)
