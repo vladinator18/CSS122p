@@ -212,13 +212,30 @@ public class SimpleUI extends JFrame {
             content.setBackground(Color.WHITE);
             content.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
             
-            ImageIcon loadingIcon = new ImageIcon("loading.gif");
-            JLabel splashLabel = new JLabel("Loading...", loadingIcon, SwingConstants.CENTER);
+            ImageIcon loadingIcon = null;
+            try {
+                java.io.File gifFile = new java.io.File("loading.gif");
+                if (gifFile.exists()) {
+                    loadingIcon = new ImageIcon(gifFile.toURI().toURL());
+                } else {
+                    loadingIcon = new ImageIcon(); // Empty icon
+                    System.out.println("loading.gif not found at: " + gifFile.getAbsolutePath());
+                }
+            } catch (Exception e) {
+                loadingIcon = new ImageIcon();
+            }
+
+            JLabel splashLabel;
+            if (loadingIcon != null && loadingIcon.getIconWidth() > 0) {
+                splashLabel = new JLabel("Loading...", loadingIcon, SwingConstants.CENTER);
+            } else {
+                splashLabel = new JLabel("Loading...", SwingConstants.CENTER);
+            }
             splashLabel.setFont(new Font("Arial", Font.BOLD, 16));
             content.add(splashLabel, BorderLayout.CENTER);
             
-            int width = loadingIcon.getIconWidth() > 0 ? loadingIcon.getIconWidth() + 60 : 300;
-            int height = loadingIcon.getIconHeight() > 0 ? loadingIcon.getIconHeight() + 60 : 150;
+            int width = (loadingIcon != null && loadingIcon.getIconWidth() > 0) ? loadingIcon.getIconWidth() + 60 : 300;
+            int height = (loadingIcon != null && loadingIcon.getIconHeight() > 0) ? loadingIcon.getIconHeight() + 60 : 150;
             splash.setSize(width, height);
             splash.setLocationRelativeTo(null);
             splash.setVisible(true);
