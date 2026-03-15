@@ -62,11 +62,14 @@ public class SimpleUI extends JFrame {
 
         // Layout Setup
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Top Control Panel (Filters)
-        JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
+        JPanel controlPanel = new JPanel(new GridLayout(2,1,0,0));
         controlPanel.setBorder(BorderFactory.createTitledBorder("Search & Filter"));
+        
+        JPanel row1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 20));
+        JPanel row2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 20));
         
         JLabel filterLabel = new JLabel("Filter by:");
         filterLabel.setFont(new Font("Arial", Font.BOLD, 14));
@@ -97,6 +100,19 @@ public class SimpleUI extends JFrame {
         blockReportBtn.setBackground(new Color(60, 179, 113));
         blockReportBtn.setForeground(Color.BLACK);
         blockReportBtn.setFocusPainted(false);
+        
+        
+        JButton buyBtn = new JButton("Buy Apartment");
+        buyBtn.setFont(new Font("Arial", Font.BOLD, 14));
+        buyBtn.setBackground(new Color(60, 179, 113));
+        buyBtn.setForeground(Color.BLACK);
+        buyBtn.setFocusPainted(false);
+        
+        JButton resBtn = new JButton("Reserve Apartment");
+        resBtn.setFont(new Font("Arial", Font.BOLD, 14));
+        resBtn.setBackground(new Color(60, 179, 113));
+        resBtn.setForeground(Color.BLACK);
+        resBtn.setFocusPainted(false);
 
         reportBtn.addActionListener(e -> {
             ReportGenerator rg = new ReportGenerator();
@@ -110,12 +126,18 @@ public class SimpleUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Block report printed to console.", "Report Generated", JOptionPane.INFORMATION_MESSAGE);
         });
         
-        controlPanel.add(filterLabel);
-        controlPanel.add(filterCombo);
-        controlPanel.add(filterField);
-        controlPanel.add(applyBtn);
-        controlPanel.add(reportBtn);
-        controlPanel.add(blockReportBtn);
+        row1.add(filterLabel);
+        row1.add(filterCombo);
+        row1.add(filterField);
+        row1.add(applyBtn);
+        row2.add(reportBtn);
+        row2.add(blockReportBtn);
+        row2.add(buyBtn);
+        row2.add(resBtn);
+        
+        controlPanel.add(row1);
+        controlPanel.add(row2);
+        
         mainPanel.add(controlPanel, BorderLayout.NORTH);
 
         // Center Panel (JTable)
