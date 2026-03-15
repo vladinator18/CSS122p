@@ -117,13 +117,13 @@ public class SimpleUI extends JFrame {
         reportBtn.addActionListener(e -> {
             ReportGenerator rg = new ReportGenerator();
             rg.generateFullReport(allProperties);
-            JOptionPane.showMessageDialog(this, "Full report printed to console.", "Report Generated", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(this, "Full report printed to console.", "Report Generated", JOptionPane.INFORMATION_MESSAGE);
         });
 
         blockReportBtn.addActionListener(e -> {
             ReportGenerator rg = new ReportGenerator();
             rg.generateBlockReport(allProperties);
-            JOptionPane.showMessageDialog(this, "Block report printed to console.", "Report Generated", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(this, "Block report printed to console.", "Report Generated", JOptionPane.INFORMATION_MESSAGE);
         });
         
         row1.add(filterLabel);
