@@ -1,0 +1,1 @@
+The database.csv in located in copies_backups should not be moved. The csv file in the main used directory is modified by SimpleUI.java (Buy Apartment Button and Reserve Apartment Button). 

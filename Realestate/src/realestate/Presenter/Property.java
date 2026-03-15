@@ -9,6 +9,9 @@ public class Property {
     private double price;
     private String status;
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
     private Property(Builder builder) {
         this.unitCode = builder.unitCode;
         this.block = builder.block;

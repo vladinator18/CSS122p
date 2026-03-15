@@ -102,17 +102,7 @@ public class SimpleUI extends JFrame {
         blockReportBtn.setFocusPainted(false);
         
         
-        JButton buyBtn = new JButton("Buy Apartment");
-        buyBtn.setFont(new Font("Arial", Font.BOLD, 14));
-        buyBtn.setBackground(new Color(60, 179, 113));
-        buyBtn.setForeground(Color.BLACK);
-        buyBtn.setFocusPainted(false);
-        
-        JButton resBtn = new JButton("Reserve Apartment");
-        resBtn.setFont(new Font("Arial", Font.BOLD, 14));
-        resBtn.setBackground(new Color(60, 179, 113));
-        resBtn.setForeground(Color.BLACK);
-        resBtn.setFocusPainted(false);
+
 
         reportBtn.addActionListener(e -> {
             ReportGenerator rg = new ReportGenerator();
@@ -125,6 +115,24 @@ public class SimpleUI extends JFrame {
             rg.generateBlockReport(allProperties);
 //            JOptionPane.showMessageDialog(this, "Block report printed to console.", "Report Generated", JOptionPane.INFORMATION_MESSAGE);
         });
+        
+                JButton buyBtn = new JButton("Buy Apartment");
+        buyBtn.setFont(new Font("Arial", Font.BOLD, 14));
+        buyBtn.setBackground(new Color(60, 179, 113));
+        buyBtn.setForeground(Color.BLACK);
+        buyBtn.setFocusPainted(false);
+        
+        JButton resBtn = new JButton("Reserve Apartment");
+        resBtn.setFont(new Font("Arial", Font.BOLD, 14));
+        resBtn.setBackground(new Color(60, 179, 113));
+        resBtn.setForeground(Color.BLACK);
+        resBtn.setFocusPainted(false);
+        
+        // Inside the SimpleUI constructor
+        buyBtn.addActionListener(e -> handleStatusUpdate("Sold"));
+        resBtn.addActionListener(e -> handleStatusUpdate("Reserved"));
+        
+        
         
         row1.add(filterLabel);
         row1.add(filterCombo);
@@ -141,11 +149,28 @@ public class SimpleUI extends JFrame {
         mainPanel.add(controlPanel, BorderLayout.NORTH);
 
         // Center Panel (JTable)
-        String[] columnNames = {"UNIT CODE", "BLOCK LETTER", "LOT NO.", "AREA (sqm)", "PRICE", "STATUS"};
+//        String[] columnNames = {"UNIT CODE", "BLOCK LETTER", "LOT NO.", "AREA (sqm)", "PRICE", "STATUS"};
+//        tableModel = new DefaultTableModel(columnNames, 0) {
+//            @Override
+//            public boolean isCellEditable(int row, int column) {
+//                return false; // Table cells are read-only
+//            }
+//        };
+// Add "SELECT" as the first column
+        String[] columnNames = {"SELECT", "UNIT CODE", "BLOCK LETTER", "LOT NO.", "AREA (sqm)", "PRICE", "STATUS"};
+
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                // Column 0 (SELECT) must be Boolean to show a checkbox
+                if (columnIndex == 0) return Boolean.class;
+                return String.class;
+            }
+
+            @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Table cells are read-only
+                // Only the checkbox column should be clickable
+                return column == 0;
             }
         };
         
@@ -245,19 +270,90 @@ public class SimpleUI extends JFrame {
     }
 
     private void updateTable(List<Property> properties) {
-        tableModel.setRowCount(0); // Clear rows
+        tableModel.setRowCount(0); 
         for (Property p : properties) {
+            // We must provide 7 items to match the 7 columns in the header
             Object[] row = {
-                p.getUnitCode(),
-                p.getBlock(),
-                p.getLot(),
-                String.format(p.getArea()+"sqm"),
-                String.format("₱%,.2f",p.getPrice()), // Format currency nicer
-                p.getStatus()
+                Boolean.FALSE,                    // 0: SELECT (Checkbox)
+                p.getUnitCode(),                  // 1: UNIT CODE
+                p.getBlock(),                     // 2: BLOCK LETTER
+                p.getLot(),                       // 3: LOT NO.
+                p.getArea() + " sqm",             // 4: AREA (sqm)
+                String.format("₱%,.2f", p.getPrice()), // 5: PRICE
+                p.getStatus()                     // 6: STATUS
             };
             tableModel.addRow(row);
         }
     }
+    
+    
+// Inside constructor
+
+    private void handleStatusUpdate(String newStatus) {
+        boolean anyUpdated = false;
+        int skippedCount = 0;
+
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            Boolean isSelected = (Boolean) tableModel.getValueAt(i, 0);
+
+            if (isSelected != null && isSelected) {
+                String unitCode = (String) tableModel.getValueAt(i, 1);
+
+                // Look for the property in the master list
+                for (Property p : allProperties) {
+                    if (p.getUnitCode().equals(unitCode)) {
+
+                        // STRICT CHECK: Only proceed if current status is "Available"
+                        if ("Available".equalsIgnoreCase(p.getStatus())) {
+                            p.setStatus(newStatus);
+                            anyUpdated = true;
+                        } else {
+                            // Keep track of how many were already Sold/Reserved
+                            skippedCount++;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (anyUpdated) {
+            saveAllToCSV();             // Save the updated list to file
+            updateTable(allProperties); // Refresh the UI
+
+            String message = "Properties successfully updated to " + newStatus + ".";
+            if (skippedCount > 0) {
+                message += "\n(Note: " + skippedCount + " selected item(s) were skipped because they were not 'Available'.)";
+            }
+            JOptionPane.showMessageDialog(this, message, "Update Successful", JOptionPane.INFORMATION_MESSAGE);
+
+        } else if (skippedCount > 0) {
+            // If the user selected rows, but none of them were "Available"
+            JOptionPane.showMessageDialog(this, 
+                "Action failed: The selected properties are already Sold or Reserved.", 
+                "Invalid Selection", JOptionPane.WARNING_MESSAGE);
+        } else {
+            // If nothing was checked at all
+            JOptionPane.showMessageDialog(this, "Please select at least one row.");
+        }
+    }
+
+private void saveAllToCSV() {
+    try (java.io.PrintWriter writer = new java.io.PrintWriter(new java.io.File("database.csv"))) {
+        for (Property p : allProperties) {
+            writer.println(String.format("%s,%s,%d,%d,%.2f,%s",
+                p.getUnitCode(),
+                p.getBlock(),
+                p.getLot(),
+                p.getArea(),
+                p.getPrice(),
+                p.getStatus()
+            ));
+        }
+    } catch (java.io.IOException e) {
+        JOptionPane.showMessageDialog(this, "Error saving to CSV: " + e.getMessage());
+    }
+}
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
