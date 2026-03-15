@@ -206,8 +206,29 @@ public class Realestate extends JFrame {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception ignored) {}
             
-            SimpleUI ui = new SimpleUI();
-            ui.setVisible(true);
+            JWindow splash = new JWindow();
+            JPanel content = (JPanel) splash.getContentPane();
+            content.setBackground(Color.WHITE);
+            content.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+            
+            ImageIcon loadingIcon = new ImageIcon("loading.gif");
+            JLabel splashLabel = new JLabel("Loading...", loadingIcon, SwingConstants.CENTER);
+            splashLabel.setFont(new Font("Arial", Font.BOLD, 16));
+            content.add(splashLabel, BorderLayout.CENTER);
+            
+            int width = loadingIcon.getIconWidth() > 0 ? loadingIcon.getIconWidth() + 60 : 300;
+            int height = loadingIcon.getIconHeight() > 0 ? loadingIcon.getIconHeight() + 60 : 150;
+            splash.setSize(width, height);
+            splash.setLocationRelativeTo(null);
+            splash.setVisible(true);
+            
+            Timer timer = new Timer(2000, e -> {
+                splash.dispose();
+                Realestate ui = new Realestate();
+                ui.setVisible(true);
+            });
+            timer.setRepeats(false);
+            timer.start();
         });
     }
 }
