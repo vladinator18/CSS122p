@@ -116,13 +116,13 @@ public class SimpleUI extends JFrame {
 //            JOptionPane.showMessageDialog(this, "Block report printed to console.", "Report Generated", JOptionPane.INFORMATION_MESSAGE);
         });
         
-                JButton buyBtn = new JButton("Buy Apartment");
+                JButton buyBtn = new JButton("Buy lot");
         buyBtn.setFont(new Font("Arial", Font.BOLD, 14));
         buyBtn.setBackground(new Color(60, 179, 113));
         buyBtn.setForeground(Color.BLACK);
         buyBtn.setFocusPainted(false);
         
-        JButton resBtn = new JButton("Reserve Apartment");
+        JButton resBtn = new JButton("Reserve lot");
         resBtn.setFont(new Font("Arial", Font.BOLD, 14));
         resBtn.setBackground(new Color(60, 179, 113));
         resBtn.setForeground(Color.BLACK);

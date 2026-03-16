@@ -6,16 +6,14 @@ import javax.swing.UIManager;
 public class Realestate {
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                // Set System Look & Feel to match the operating system
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception ignored) {
-            }
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ignored) {}
 
-            // Create and display the SimpleUI instance
-            SimpleUI ui = new SimpleUI();
-            ui.setVisible(true);
-        });
+        // Run animation on a separate thread to keep the GIF playing smoothly
+        new Thread(() -> {
+            Realestateopenui splash = new Realestateopenui();
+            splash.playAnimation();
+        }).start();
     }
 }
